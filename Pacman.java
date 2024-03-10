@@ -1,7 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Pacman extends JFrame {
 static JFrame a;
@@ -11,7 +9,7 @@ static JLabel l;
 public static void main(String[] args) {
     a = new JFrame("Pac-man");
     JPanel p = new JPanel();
-    ImageIcon originalIcon = new ImageIcon("Pac-Man-Logo.png");
+    ImageIcon originalIcon = new ImageIcon("images/Pac-Man-Logo.png");
     Image originalImage = originalIcon.getImage();
 
     int newWidth = 500;
