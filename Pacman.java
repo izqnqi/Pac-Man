@@ -15,11 +15,18 @@ public static void main(String[] args) {
     int newWidth = 500;
     int newHeight = 300;
     Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-
     ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+    Map mapPanel = new Map();
+
 
 
     p.setBackground(Color.black);
+    a.getContentPane().add(mapPanel);
+
+    mapPanel.setBounds(0, 0, 400, 400);
+    mapPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
+    mapPanel.setBackground(Color.black);
     l = new JLabel(resizedIcon);
     a.add(p);
     p.add(l);
