@@ -44,6 +44,10 @@ public static void main(String[] args) {
     p.add(l, BorderLayout.NORTH);
     a.add(p);
     p.add(l);
+
+    p.add(mapPanel.getGhostBlueL());
+    p.add(mapPanel.getGhostPinkL());
+
     a.setSize(800, 800);
     a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     a.setVisible(true);

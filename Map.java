@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 public class Map extends JPanel implements ActionListener {
     private JLabel upL, downL, rightL, leftL, ghostBlueL, ghostRedL, ghostYellowL, ghostPinkL;
 
-
+public Map(){
+    showImages();
+}
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -37,6 +39,9 @@ public class Map extends JPanel implements ActionListener {
         ghostBlueL.setBounds(30,30,50,100);
     }
 
+    public JLabel getGhostPinkL() {
+        return ghostPinkL;
+    }
 
     public JLabel getGhostBlueL() {
         return ghostBlueL;
