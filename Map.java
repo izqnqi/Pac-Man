@@ -46,4 +46,8 @@ public Map(){
     public JLabel getGhostBlueL() {
         return ghostBlueL;
     }
+
+    public JLabel getGhostRedL() {
+        return ghostRedL;
+    }
 }

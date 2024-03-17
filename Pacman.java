@@ -47,6 +47,7 @@ public static void main(String[] args) {
 
     p.add(mapPanel.getGhostBlueL());
     p.add(mapPanel.getGhostPinkL());
+    p.add(mapPanel.getGhostRedL());
 
     a.setSize(800, 800);
     a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
