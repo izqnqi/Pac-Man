@@ -37,7 +37,6 @@ public static void main(String[] args) {
     gameP.setLayout(new FlowLayout(FlowLayout.CENTER));
     gameP.add(shscore);
 
-
     l = new JLabel(resizedIcon);
     p.add(l, BorderLayout.NORTH);
     a.add(p);

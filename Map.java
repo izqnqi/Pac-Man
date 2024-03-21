@@ -11,7 +11,6 @@ public class Map extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
     }
-
     private void showImages() {
         upL = new JLabel(new ImageIcon("images/pm-up.png"));
         downL = new JLabel(new ImageIcon("images/pm-down.png"));
