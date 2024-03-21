@@ -63,7 +63,6 @@ public class GamePanel extends JPanel implements ActionListener {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int row = 0; row < map.length; row++) {
