@@ -4,8 +4,9 @@ import javax.swing.*;
 public class Pacman extends JFrame {
 static JFrame a;
 static JLabel l;
-static int lives;
+static int lives = 3;
 static int score;
+
 
 
 public static void main(String[] args) {
@@ -22,6 +23,8 @@ public static void main(String[] args) {
 
 
     p.setBackground(Color.black);
+    a.getContentPane().setLayout(new BorderLayout());
+    a.getContentPane().add(gameP, BorderLayout.CENTER);
     a.getContentPane().add(gameP);
     gameP.setBounds(0, 0, 400, 400);
     gameP.setBorder(BorderFactory.createLineBorder(Color.blue));
