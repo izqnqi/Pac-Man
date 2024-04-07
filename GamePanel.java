@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -12,6 +10,16 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
     private final int blockSize = 30;
+    public GamePanel() {
+        Images map = new Images();
+
+        add(map.getGhostPinkL());
+        add(map.getGhostBlueL());
+        add(map.getGhostRedL());
+        add(map.getGhostYellow());
+
+    }
+
 
     private int[][] map = {
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -37,7 +45,6 @@ public class GamePanel extends JPanel implements ActionListener {
                     g.setColor(Color.BLUE);
                     g.fillRect(col * blockSize, row * blockSize, blockSize, blockSize);
                 } else {
-                    g.setColor(Color.CYAN);
                     g.setColor(Color.BLACK);
                     g.fillRect(col * blockSize, row * blockSize, blockSize, blockSize);
                     g.setColor(Color.WHITE);

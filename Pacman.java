@@ -22,6 +22,7 @@ public static void main(String[] args) {
     GamePanel gameP = new GamePanel();
 
 
+
     p.setBackground(Color.black);
     a.getContentPane().setLayout(new BorderLayout());
     a.getContentPane().add(gameP, BorderLayout.CENTER);
