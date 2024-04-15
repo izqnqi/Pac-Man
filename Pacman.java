@@ -27,7 +27,7 @@ public static void main(String[] args) {
     a.getContentPane().setLayout(new BorderLayout());
     a.getContentPane().add(gameP, BorderLayout.CENTER);
     a.getContentPane().add(gameP);
-    gameP.setBounds(0, 0, 400, 400);
+    gameP.setSize(625, 625);
     gameP.setBorder(BorderFactory.createLineBorder(Color.blue));
     gameP.setBackground(Color.black);
 
