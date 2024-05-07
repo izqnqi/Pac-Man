@@ -6,7 +6,7 @@ static JFrame a;
 static JLabel l;
 static int lives = 3;
 static int score;
-
+static JLabel shscore;
 
 
 public static void main(String[] args) {
@@ -35,9 +35,11 @@ public static void main(String[] args) {
     shlives.setForeground(Color.yellow);
     shlives.setFont(new Font("Arial", Font.PLAIN, 15));
     gameP.add(shlives);
-    JLabel shscore = new JLabel("Score: " +score, JLabel.RIGHT);
+
+    shscore = new JLabel("Score: " +score, JLabel.RIGHT);
     shscore.setForeground(Color.yellow);
     shscore.setFont(new Font("Arial", Font.PLAIN, 15));
+
     gameP.setLayout(new FlowLayout(FlowLayout.CENTER));
     gameP.add(shscore);
 
@@ -51,5 +53,8 @@ public static void main(String[] args) {
     a.show();
 
 }
+    public static void updateScore(int newScore) {
+        shscore.setText("Score: " + newScore);
+    }
 }
 

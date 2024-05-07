@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Images extends JPanel implements ActionListener {
-    private JLabel upL, downL, rightL, leftL, inky, blinky, clyde, pinky;
+    private JLabel upL, downL, rightL, leftL, inky, blinky, clyde, pinky, cherry;
 
 public Images(){
     showImages();
@@ -23,6 +23,7 @@ public Images(){
         blinky = new JLabel(new ImageIcon("images/red ghost.png"));
         clyde = new JLabel(new ImageIcon("images/yellow ghost.png"));
         pinky = new JLabel(new ImageIcon("images/pink ghost.png"));
+        cherry = new JLabel(new ImageIcon("images/cherry.png"));
 
         add(upL);
         add(downL);
@@ -32,6 +33,7 @@ public Images(){
         add(blinky);
         add(clyde);
         add(pinky);
+        add(cherry);
         setLayout(null);
 
 
@@ -62,5 +64,8 @@ public Images(){
     }
     public JLabel getGhostYellow(){
     return clyde;
+    }
+    public JLabel getCherry(){
+    return cherry;
     }
 }

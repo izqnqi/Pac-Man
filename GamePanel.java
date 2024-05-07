@@ -2,26 +2,40 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 
 public class GamePanel extends JPanel implements ActionListener {
 
     private Images images;
     public GamePanel() {
         images = new Images();
+        setFocusable(true);
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int key = e.getKeyCode();
+                pacmanMovement(key);
+            }
+        });
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
+
     private final int blockSize = 25;
+    int food = 10;
     int score = 0;
     int lives = 3;
     int timer = 150;
     int moves; // move count
-    int px = 1; //pacman position x
-    int py = 1; //pacman position y
+    int px = 13; //pacman position x
+    int py = 17; //pacman position y
 
     int bx = 11; // blinky
     int by = 13;
@@ -106,13 +120,14 @@ public class GamePanel extends JPanel implements ActionListener {
                             row * blockSize + (blockSize - inkySize) / 2,
                             inkySize, inkySize, this);
                 }
-                else if (map[row][col] == 13){
-                    JLabel pacmanLabel = images.getpacman();
-                    Image pacmanImage = ((ImageIcon) pacmanLabel.getIcon()).getImage();
-                    int pacmanSize = blockSize +2;
-                    g.drawImage(pacmanImage, col * blockSize + (blockSize - pacmanSize) / 2, row * blockSize + (blockSize - pacmanSize) / 2,
-                            pacmanSize, pacmanSize, this);
-                } else {
+                //else if (map[row][col] == 13){
+                 //   JLabel pacmanLabel = images.getpacman();
+                  //  Image pacmanImage = ((ImageIcon) pacmanLabel.getIcon()).getImage();
+                 //   int pacmanSize = blockSize +2;
+                 //   g.drawImage(pacmanImage, col * blockSize + (blockSize - pacmanSize) / 2, row * blockSize + (blockSize - pacmanSize) / 2,
+                          //  pacmanSize, pacmanSize, this);
+               // }
+                else {
                     g.setColor(Color.BLACK);
                     g.fillRect(col * blockSize, row * blockSize, blockSize, blockSize);
                     g.setColor(Color.WHITE);
@@ -124,8 +139,50 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
 
-    public void pacmanMovement(){
+    public void pacmanMovement(int direction){
+        //px
+        //py
+        int newX = px;
+        int newY = py;
 
+       //new coordinates
+        switch (direction) {
+            case KeyEvent.VK_UP:
+                newY--;
+                break;
+            case KeyEvent.VK_DOWN:
+                newY++;
+                break;
+            case KeyEvent.VK_LEFT:
+                newX--;
+                break;
+            case KeyEvent.VK_RIGHT:
+                newX++;
+                break;
+            default:
+                break;
+        }
+
+        //proverka na prostranstvoto (steni)
+        if (newX >= 0 && newY >= 0 && newX < map[0].length && newY < map.length && map[newY][newX] != 1) {
+
+            px = newX;
+            py = newY;
+
+            // check if pacman ate the dot
+            if (map[py][px] == 0) {
+                map[py][px] = 2;
+                score++;
+                Pacman.updateScore(score);
+            }
+
+            // update the location of the pacman JLabel
+            int pacmanSize = blockSize + 2;
+            int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2;
+            int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
+            images.getpacman().setBounds(pacmanX, pacmanY, pacmanSize, pacmanSize);
+            repaint();
+        }
     }
 
     public void blinkyMovement(){
