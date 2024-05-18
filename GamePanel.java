@@ -6,9 +6,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
+
 public class GamePanel extends JPanel implements ActionListener {
 
     private Images images;
+    private String gameOverr;
     public GamePanel() {
         images = new Images();
         setFocusable(true);
@@ -37,8 +39,8 @@ public class GamePanel extends JPanel implements ActionListener {
     int px = 13; //pacman position x
     int py = 17; //pacman position y
 
-    int bx = 11; // blinky
-    int by = 13;
+    int bx = 17; // blinky
+    int by = 25;
     int cx = 12; // clyde
     int cy = 13;
     int ix = 13; // inky
@@ -66,12 +68,12 @@ public class GamePanel extends JPanel implements ActionListener {
             { 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
             { 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1},
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            { 1, 0, 0, 0, 0, 13, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
             { 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1},
             { 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
             { 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1},
             { 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-            { 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
+            { 1, 0, 13, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
@@ -116,17 +118,16 @@ public class GamePanel extends JPanel implements ActionListener {
                     JLabel inkyLabel = images.getGhostBlue();
                     Image inkyImage = ((ImageIcon) inkyLabel.getIcon()).getImage();
                     int inkySize = blockSize + 2;
-                    g.drawImage(inkyImage, col * blockSize + (blockSize - inkySize) / 2,
-                            row * blockSize + (blockSize - inkySize) / 2,
-                            inkySize, inkySize, this);
+                    g.drawImage(inkyImage, col * blockSize + (blockSize - inkySize) / 2,  row * blockSize + (blockSize - inkySize) / 2, inkySize, inkySize, this);
                 }
-                //else if (map[row][col] == 13){
-                 //   JLabel pacmanLabel = images.getpacman();
-                  //  Image pacmanImage = ((ImageIcon) pacmanLabel.getIcon()).getImage();
-                 //   int pacmanSize = blockSize +2;
-                 //   g.drawImage(pacmanImage, col * blockSize + (blockSize - pacmanSize) / 2, row * blockSize + (blockSize - pacmanSize) / 2,
-                          //  pacmanSize, pacmanSize, this);
-               // }
+                else if (map[row][col] == 13){
+                    JLabel pacmanLabel = images.getpacman();
+                    Image pacmanImage = ((ImageIcon) pacmanLabel.getIcon()).getImage();
+                    int pacmanSize = blockSize + 2;
+                    int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2; // calculate pacman x position
+                    int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2; //calculate pacman y position
+                    g.drawImage(pacmanImage, pacmanX, pacmanY, pacmanSize, pacmanSize, this);
+                }
                 else {
                     g.setColor(Color.BLACK);
                     g.fillRect(col * blockSize, row * blockSize, blockSize, blockSize);
@@ -141,7 +142,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void pacmanMovement(int direction){
         //px
-        //py
+        // py
         int newX = px;
         int newY = py;
 
@@ -181,13 +182,23 @@ public class GamePanel extends JPanel implements ActionListener {
             int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2;
             int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
             images.getpacman().setBounds(pacmanX, pacmanY, pacmanSize, pacmanSize);
+            System.out.println("Pacman Position: (" + pacmanX + ", " + pacmanY + ")");
             repaint();
         }
     }
+    private void gameOver(){
+        lives--;
+        if (lives == 0){
+        JLabel stopGame = new JLabel("GAME OVER!");
+        stopGame.setForeground(Color.yellow);
+        stopGame.setFont(new Font("Arial", Font.PLAIN, 55));
+        }
+    }
 
-    public void blinkyMovement(){
+    public void blinkyMovement() {
 
     }
+
     public void pinkyMovement(){
 
     }
@@ -196,5 +207,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void inkyMovement(){
 
+    }
+    public void gameCondition(){
+        if (lives == 0){
+            gameOver();
+        }
     }
 }
