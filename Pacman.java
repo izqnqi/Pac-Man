@@ -2,60 +2,46 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Pacman extends JFrame {
-    static JFrame a;
-    static JLabel l;
     static int lives = 3;
-    static int score;
+    static int score = 0;
     static JLabel shscore;
+    static JLabel shlives;
 
     public static void main(String[] args) {
-        a = new JFrame("Pac-man");
-        JPanel p = new JPanel();
-        ImageIcon originalIcon = new ImageIcon("images/Pac-Man-Logo.png");
-        Image originalImage = originalIcon.getImage();
+        JFrame frame = new JFrame("Pac-man");
 
-        int newWidth = 500;
-        int newHeight = 300;
-        Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(resizedImage);
-        GamePanel gameP = new GamePanel();
+        JPanel infoPanel = new JPanel();
+        infoPanel.setBackground(Color.black);
+        infoPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        p.setBackground(Color.black);
-        a.getContentPane().setLayout(new BorderLayout());
-        a.getContentPane().add(gameP, BorderLayout.CENTER);
-        gameP.setSize(625, 625);
-        gameP.setBorder(BorderFactory.createLineBorder(Color.blue));
-        gameP.setBackground(Color.black);
-
-        JLabel shlives = new JLabel(" Lives: " + lives, JLabel.LEFT);
+        shlives = new JLabel("Lives: " + lives);
         shlives.setForeground(Color.yellow);
         shlives.setFont(new Font("Arial", Font.PLAIN, 15));
-        gameP.add(shlives);
+        infoPanel.add(shlives);
 
-        shscore = new JLabel("Score: " + score, JLabel.RIGHT);
+        shscore = new JLabel("Score: " + score);
         shscore.setForeground(Color.yellow);
         shscore.setFont(new Font("Arial", Font.PLAIN, 15));
+        infoPanel.add(shscore);
 
-        gameP.setLayout(new FlowLayout(FlowLayout.CENTER));
-        gameP.add(shscore);
+        GamePanel gamePanel = new GamePanel();
 
-        l = new JLabel(resizedIcon);
-        p.add(l, BorderLayout.NORTH);
-        a.add(p);
-        a.setSize(625, 645);
-        a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.add(infoPanel, BorderLayout.NORTH);
+        frame.add(gamePanel, BorderLayout.CENTER);
 
-
-        a.setLocationRelativeTo(null);
-
-        a.setVisible(true);
-
-
-
+        frame.setSize(640, 690);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public static void updateScore(int newScore) {
-        shscore.setText("Score: " + newScore);
+        score = newScore;
+        shscore.setText("Score: " + score);
     }
 
+    public static void updateLives() {
+        shlives.setText("Lives: " + lives);
+    }
 }
