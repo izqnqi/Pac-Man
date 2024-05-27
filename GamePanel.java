@@ -199,7 +199,7 @@ public class GamePanel extends JPanel implements ActionListener {
         return collided;
     }
 
-    //reseting the game to it's starting point
+    //reset the game to it's starting point
     public void resetGame() {
         px = 13;
         by = 25;
@@ -212,10 +212,48 @@ public class GamePanel extends JPanel implements ActionListener {
         Pacman.updateLives();
         repaint();
     }
+    public void restartGame() {
+        // Reset the game state
+        px = 13;
+        py = 17;
+        bx = 17;
+        by = 25;
+        cx = 12;
+        cy = 13;
+        ix = 20;
+        iy = 10;
+        pix = 5;
+        piy = 23;
+        score = 0;
+        Pacman.lives = 3; //reset lives
+        Pacman.score = 0;
+        Pacman.updateScore(score);
+        Pacman.updateLives();
+
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[0].length; col++) {
+                if (map[row][col] == 2 || map[row][col] == 3) {
+                    map[row][col] = 0;
+                }
+            }
+        } moveTimer.start();
+        repaint();
+    }
+
+
     public void gameOver() {
         moveTimer.stop();
-        JOptionPane.showMessageDialog(this, "GAME OVER!", "game over",JOptionPane.INFORMATION_MESSAGE);
+        int response = JOptionPane.showOptionDialog(this, "GAME OVER!", "Game Over",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                null, new String[]{"Restart", "Quit"}, "Restart");
+
+        if (response == 0) {
+            restartGame();
+        } else {
+            System.exit(0);
+        }
     }
+
 
 
     public void blinkyMovement() {

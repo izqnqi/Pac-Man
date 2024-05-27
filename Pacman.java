@@ -30,7 +30,7 @@ public class Pacman extends JFrame {
         frame.add(infoPanel, BorderLayout.NORTH);
         frame.add(gamePanel, BorderLayout.CENTER);
 
-        frame.setSize(640, 690);
+        frame.setSize(625, 670);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
