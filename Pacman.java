@@ -35,15 +35,6 @@ public class Pacman extends JFrame {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        new Thread(() -> {
-            while (true) {
-                String input = System.console().readLine();
-                if (input.equalsIgnoreCase("exit game")) {
-                    frame.dispose();
-                    System.exit(0);
-                }
-            }
-        }).start();
     }
 
     public static void updateScore(int newScore) {
