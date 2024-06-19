@@ -24,11 +24,12 @@ public class Pacman extends JFrame {
         shscore.setFont(new Font("Arial", Font.PLAIN, 15));
         infoPanel.add(shscore);
 
-        GamePanel gamePanel = new GamePanel();
+        //GamePanel gamePanel = new GamePanel();
+        Map gameMap = new Map();
 
         frame.setLayout(new BorderLayout());
         frame.add(infoPanel, BorderLayout.NORTH);
-        frame.add(gamePanel, BorderLayout.CENTER);
+        frame.add(gameMap, BorderLayout.CENTER);
 
         frame.setSize(640, 690);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
