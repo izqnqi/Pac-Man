@@ -7,6 +7,7 @@ public class Pacman extends JFrame {
     static JLabel shscore;
     static JLabel shlives;
 
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pac-man");
 
@@ -24,8 +25,8 @@ public class Pacman extends JFrame {
         shscore.setFont(new Font("Arial", Font.PLAIN, 15));
         infoPanel.add(shscore);
 
-        //GamePanel gamePanel = new GamePanel();
-        Map gameMap = new Map();
+        pacmanModel pacman = new pacmanModel();
+        Map gameMap = new Map(pacman);
 
         frame.setLayout(new BorderLayout());
         frame.add(infoPanel, BorderLayout.NORTH);

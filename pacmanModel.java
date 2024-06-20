@@ -1,41 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class pacmanModel extends Map implements ActionListener {
+public class pacmanModel {
+    private final Images images;
+    private static final int blockSize = 25;
+    public int px = 13;
+    public int py = 17;
+    private int currentDirection;
+    private Map map;
+
     public pacmanModel() {
-        super();
         images = new Images();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    private final Images images;
-    private static final int blockSize = 25;
-    static int px = 13; // pacman position x
-    static int py = 17; // pacman position y
-    private static int currentDirection;
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        JLabel pacmanLabel = images.getpacman();
-        Image pacmanImage = ((ImageIcon) pacmanLabel.getIcon()).getImage();
-        int pacmanSize = blockSize + 2;
-        int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2;
-        int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
-        g.drawImage(pacmanImage, pacmanX, pacmanY, pacmanSize, pacmanSize, this);
+    public JLabel getpacman() {
+        return images.getpacman();
     }
 
     public void pacmanMovement(int direction) {
         currentDirection = direction;
     }
 
-    public void movePacman() {
+    public void movePacman(int[][] map) {
         int newX = px;
         int newY = py;
 
@@ -57,9 +44,6 @@ public class pacmanModel extends Map implements ActionListener {
         }
 
         if (newX >= 0 && newY >= 0 && newX < map[0].length && newY < map.length && map[newY][newX] != 1) {
-            if (checkCollisionWithGhost(newX, newY)) {
-                return;
-            }
             px = newX;
             py = newY;
 
@@ -68,24 +52,39 @@ public class pacmanModel extends Map implements ActionListener {
                 Pacman.score++;
                 Pacman.updateScore(Pacman.score);
             }
-
-            int pacmanSize = blockSize + 2;
-            int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2;
-            int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
-            images.getpacman().setBounds(pacmanX, pacmanY, pacmanSize, pacmanSize);
-            repaint();
         }
     }
-     boolean checkCollisionWithGhost(int x, int y) {
+
+    public void resetPacman() {
+        px = 13;
+        py = 17;
+    }
+
+    public void drawPacman(Graphics g, int blockSize) {
+        Image pacmanImage = ((ImageIcon) images.getpacman().getIcon()).getImage();
+        int pacmanSize = blockSize + 2;
+        int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2;
+        int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
+        g.drawImage(pacmanImage, pacmanX, pacmanY, pacmanSize, pacmanSize, null);
+    }
+    public int bx = 14, by = 11;
+    public int pix = 14, piy = 13;
+    public int ix = 12, iy = 13;
+    public int cx = 16, cy = 13;
+
+
+    boolean checkCollisionWithGhost(int x, int y) {
         boolean collided = (x == bx && y == by) || (x == pix && y == piy) || (x == cx && y == cy) || (x == ix && y == iy);
         if (collided) {
             Pacman.lives--;
             if (Pacman.lives > 0) {
-                resetGame();
+                map.resetGame();
             } else {
-                gameOver();
+                map.gameOver();
             }
         }
-        return collided;
+      return collided;
     }
+
+
 }

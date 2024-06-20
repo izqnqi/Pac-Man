@@ -2,46 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-public class Ghosts extends Map {
+public class Ghosts {
+    private Images images;
+
     public Ghosts() {
-        super();
         images = new Images();
     }
 
+    public int bx = 14, by = 11;
+    public int pix = 14, piy = 13;
+    public int ix = 12, iy = 13;
+    public int cx = 16, cy = 13;
 
     private int blinkyMoveCounter = 0;
-    private  Images images;
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        JLabel ghostRedLabel = images.getGhostRed();
-        ImageIcon ghostRedIcon = (ImageIcon) ghostRedLabel.getIcon();
-        Image ghostRedImage = ghostRedIcon.getImage();
-        g.drawImage(ghostRedImage, bx * blockSize + 1, by * blockSize,
-                blockSize + 2, blockSize + 2, this);
 
-        // draw pinky
-        JLabel pinkyLabel = images.getGhostPink();
-        ImageIcon pinkyIcon = (ImageIcon) pinkyLabel.getIcon();
-        Image ghostPinkyImage = pinkyIcon.getImage();
-        g.drawImage(ghostPinkyImage, pix * blockSize +1, piy * blockSize ,
-                blockSize + 2, blockSize + 2, this);
-
-        //draw inky
-        JLabel inkyLabel = images.getGhostBlue();
-        ImageIcon inkyIcon = (ImageIcon) inkyLabel.getIcon();
-        Image ghostInkyImage = inkyIcon.getImage();
-        g.drawImage(ghostInkyImage, ix * blockSize + 1, iy * blockSize ,
-                blockSize + 2, blockSize + 2, this);
-
-        // draw clyde
-        JLabel clydeLabel = images.getGhostYellow();
-        ImageIcon clydeIcon = (ImageIcon) clydeLabel.getIcon();
-        Image ghostClydeImage = clydeIcon.getImage();
-        g.drawImage(ghostClydeImage, cx * blockSize + 1, cy * blockSize ,
-                blockSize + 2, blockSize + 2, this);
-    }
-
-    public void blinkyMovement() {
+    public void blinkyMovement(int px, int py) {
         blinkyMoveCounter++;
         if (blinkyMoveCounter % 4 == 0) { //speed of blinky
             if (bx < px) {
@@ -57,7 +32,7 @@ public class Ghosts extends Map {
         }
     }
 
-    public void pinkyMovement() {
+    public void pinkyMovement(int[][] map) {
         Random random = new Random();
         int direction = random.nextInt(4);
         int newPx = pix;
@@ -79,17 +54,13 @@ public class Ghosts extends Map {
                 break;
         }
 
-        //checks for walls
         if (newPx >= 0 && newPy >= 0 && newPx < map[0].length && newPy < map.length && map[newPy][newPx] != 1) {
             pix = newPx;
             piy = newPy;
-            //update pinky position
         }
     }
 
-
-
-    public void clydeMovement() {
+    public void clydeMovement(int[][] map) {
         Random random = new Random();
         int direction = random.nextInt(4);
         int newCx = cx;
@@ -109,37 +80,55 @@ public class Ghosts extends Map {
                 break;
             default:
                 break;
-        } if (newCx >= 0 && newCy >= 0 && newCx < map[0].length && newCy < map.length && map[newCy][newCx] != 1) {
+        }
+        if (newCx >= 0 && newCy >= 0 && newCx < map[0].length && newCy < map.length && map[newCy][newCx] != 1) {
             cx = newCx;
             cy = newCy;
         }
     }
 
-
-
-    public void inkyMovement() {
+    public void inkyMovement(int[][] map) {
         Random random = new Random();
         int direction = random.nextInt(4);
         int newIx = ix;
         int newIy = iy;
 
         switch (direction) {
-            case 0: newIy--;
+            case 0:
+                newIy--;
                 break;
-            case 1:newIy++;
+            case 1:
+                newIy++;
                 break;
-            case 2: newIx--;
+            case 2:
+                newIx--;
                 break;
-            case 3: newIx++;
+            case 3:
+                newIx++;
                 break;
             default:
                 break;
         }
         if (newIx >= 0 && newIy >= 0 && newIx < map[0].length && newIy < map.length && map[newIy][newIx] != 1) {
-            //update inky position
             ix = newIx;
             iy = newIy;
         }
     }
-}
 
+    public void drawGhosts(Graphics g, int blockSize) {
+        drawGhost(g, images.getGhostRed(), bx, by, blockSize);
+        drawGhost(g, images.getGhostPink(), pix, piy, blockSize);
+        drawGhost(g, images.getGhostBlue(), ix, iy, blockSize);
+        drawGhost(g, images.getGhostYellow(), cx, cy, blockSize);
+    }
+
+    private void drawGhost(Graphics g, JLabel ghostLabel, int x, int y, int blockSize) {
+        ImageIcon ghostIcon = (ImageIcon) ghostLabel.getIcon();
+        Image ghostImage = ghostIcon.getImage();
+        g.drawImage(ghostImage, x * blockSize + 1, y * blockSize, blockSize + 2, blockSize + 2, null);
+    }
+
+    public Images getImages() {
+        return images;
+    }
+}

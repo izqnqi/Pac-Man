@@ -5,11 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Map extends JPanel  implements ActionListener {
+public class Map extends JPanel implements ActionListener {
     private pacmanModel pacmanModel;
     private Ghosts ghosts;
 
-public Map(pacmanModel pacmanModel){
+    public Map(pacmanModel pacmanModel) {
+        this.pacmanModel = pacmanModel;
+        this.ghosts = new Ghosts();
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
             @Override
@@ -17,38 +19,24 @@ public Map(pacmanModel pacmanModel){
                 int key = e.getKeyCode();
                 pacmanModel.pacmanMovement(key);
             }
-        }); moveTimer = new Timer(150, this);
+        });
+        moveTimer = new Timer(150, this);
         moveTimer.start();
-    }
-
-    public Map() {
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        pacmanModel.movePacman();
-        ghosts.blinkyMovement();
-        ghosts.pinkyMovement();
-        ghosts.clydeMovement();
-        ghosts.inkyMovement();
+        pacmanModel.movePacman(map);
+        ghosts.blinkyMovement(pacmanModel.px, pacmanModel.py);
+        ghosts.pinkyMovement(map);
+        ghosts.clydeMovement(map);
+        ghosts.inkyMovement(map);
         repaint();
     }
 
     private Timer moveTimer;
     public final int blockSize = 25;
-    int score = 0;
-    int px = 13; // pacman position x
-    int py = 17; // pacman position y
 
-    int bx = 17; // blinky x
-    int by = 25;
-    int cx = 12; // clyde
-    int cy = 13;
-    int ix = 20; // inky
-    int iy = 10;
-    int pix = 5; // pinky
-    int piy = 23;
     protected int[][] map = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -77,7 +65,8 @@ public Map(pacmanModel pacmanModel){
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-    public void paintComponent(Graphics g) {
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[0].length; col++) {
@@ -95,23 +84,22 @@ public Map(pacmanModel pacmanModel){
                 }
             }
         }
+
+        // draw pacman
+        pacmanModel.drawPacman(g, blockSize);
+
+        //draw ghosts
+        ghosts.drawGhosts(g, blockSize);
     }
 
     public void resetGame() {
-        px = 13;
-        by = 25;
-        cx = 12;
-        cy = 13;
-        ix = 20;
-        iy = 10;
-        pix = 5;
-        piy = 23;
-        Pacman.updateLives();
+        pacmanModel.resetPacman();
+        ghosts = new Ghosts();
         repaint();
     }
+
     public void gameOver() {
         moveTimer.stop();
-        JOptionPane.showMessageDialog(this, "GAME OVER!", "game over",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "GAME OVER!", "game over", JOptionPane.INFORMATION_MESSAGE);
     }
-
 }
