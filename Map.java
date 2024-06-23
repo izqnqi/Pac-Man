@@ -9,8 +9,8 @@ public class Map extends JPanel implements ActionListener {
     private pacmanModel pacmanModel;
     private Ghosts ghosts;
 
-    public Map(pacmanModel pacmanModel) {
-        this.pacmanModel = pacmanModel;
+    public Map() {
+        this.pacmanModel = new pacmanModel(this, this.ghosts);
         this.ghosts = new Ghosts();
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
@@ -24,6 +24,10 @@ public class Map extends JPanel implements ActionListener {
         moveTimer.start();
     }
 
+    public void setPacmanModel(pacmanModel pacmanModel) {
+        this.pacmanModel = pacmanModel;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         pacmanModel.movePacman(map);
@@ -32,6 +36,7 @@ public class Map extends JPanel implements ActionListener {
         ghosts.clydeMovement(map);
         ghosts.inkyMovement(map);
         repaint();
+
     }
 
     private Timer moveTimer;
@@ -95,6 +100,15 @@ public class Map extends JPanel implements ActionListener {
     public void resetGame() {
         pacmanModel.resetPacman();
         ghosts = new Ghosts();
+        pacmanModel.px = 13;
+        ghosts.by = 25;
+        ghosts.cx = 12;
+        ghosts.cy = 13;
+        ghosts. ix = 20;
+        ghosts.iy = 10;
+        ghosts.pix = 5;
+        ghosts.piy = 23;
+        Pacman.updateLives();
         repaint();
     }
 

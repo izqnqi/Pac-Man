@@ -25,8 +25,11 @@ public class Pacman extends JFrame {
         shscore.setFont(new Font("Arial", Font.PLAIN, 15));
         infoPanel.add(shscore);
 
-        pacmanModel pacman = new pacmanModel();
-        Map gameMap = new Map(pacman);
+        Ghosts ghosts = new Ghosts();
+        Map gameMap = new Map();
+
+        pacmanModel pacman = new pacmanModel(gameMap, ghosts);
+        gameMap.setPacmanModel(pacman);
 
         frame.setLayout(new BorderLayout());
         frame.add(infoPanel, BorderLayout.NORTH);

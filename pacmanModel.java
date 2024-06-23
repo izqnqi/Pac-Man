@@ -8,10 +8,13 @@ public class pacmanModel {
     public int px = 13;
     public int py = 17;
     private int currentDirection;
-    private Map map;
+    private Map map; //map obj
+    private Ghosts ghosts; //ghost obj
 
-    public pacmanModel() {
+    public pacmanModel(Map map, Ghosts ghosts) {
         images = new Images();
+        this.map = map;
+        this.ghosts = ghosts;
     }
 
     public JLabel getpacman() {
@@ -43,7 +46,11 @@ public class pacmanModel {
                 break;
         }
 
+
         if (newX >= 0 && newY >= 0 && newX < map[0].length && newY < map.length && map[newY][newX] != 1) {
+            if (checkCollisionWithGhost(newX, newY)) {
+                return;
+            }
             px = newX;
             py = newY;
 
@@ -52,7 +59,14 @@ public class pacmanModel {
                 Pacman.score++;
                 Pacman.updateScore(Pacman.score);
             }
+            int pacmanSize = blockSize + 2;
+            int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2;
+            int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
+            images.getpacman().setBounds(pacmanX, pacmanY, pacmanSize, pacmanSize);
+            images.repaint();
+
         }
+
     }
 
     public void resetPacman() {
@@ -67,24 +81,17 @@ public class pacmanModel {
         int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
         g.drawImage(pacmanImage, pacmanX, pacmanY, pacmanSize, pacmanSize, null);
     }
-    public int bx = 14, by = 11;
-    public int pix = 14, piy = 13;
-    public int ix = 12, iy = 13;
-    public int cx = 16, cy = 13;
-
 
     boolean checkCollisionWithGhost(int x, int y) {
-        boolean collided = (x == bx && y == by) || (x == pix && y == piy) || (x == cx && y == cy) || (x == ix && y == iy);
+        boolean collided = (x == ghosts.bx && y == ghosts.by) || (x == ghosts.pix && y == ghosts.piy) || (x == ghosts.cx && y == ghosts.cy) || (x == ghosts.ix && y == ghosts.iy);
         if (collided) {
             Pacman.lives--;
             if (Pacman.lives > 0) {
-                map.resetGame();
+                this.map.resetGame();
             } else {
-                map.gameOver();
+                this.map.gameOver();
             }
         }
-      return collided;
+        return collided;
     }
-
-
 }
