@@ -1,3 +1,4 @@
+/*
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -107,6 +108,7 @@ public class GamePanel extends JPanel implements ActionListener {
         int pacmanX = px * blockSize + (blockSize - pacmanSize) / 2;
         int pacmanY = py * blockSize + (blockSize - pacmanSize) / 2;
         g.drawImage(pacmanImage, pacmanX, pacmanY, pacmanSize, pacmanSize, this);
+
         //draw blinky
         JLabel ghostRedLabel = images.getGhostRed();
         ImageIcon ghostRedIcon = (ImageIcon) ghostRedLabel.getIcon();
@@ -186,7 +188,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
 
     //method for checking if pacman collides with any of the ghosts
-    private boolean checkCollisionWithGhost(int x, int y) {
+    boolean checkCollisionWithGhost(int x, int y) {
         boolean collided = (x == bx && y == by) || (x == pix && y == piy) || (x == cx && y == cy) || (x == ix && y == iy);
         if (collided) {
             Pacman.lives--;
@@ -357,3 +359,4 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 }
+*/
